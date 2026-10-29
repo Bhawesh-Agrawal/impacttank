@@ -1,0 +1,71 @@
+{
+  "teams": [
+    {
+      "id": "team-1",
+      "name": "NeuralFlow AI",
+      "pitchTitle": "Edge AI Diagnostics for Emergency First Responders",
+      "description": "Ultra-fast multimodal AI triage assistant running entirely offline on handheld devices to assist paramedic triage in disaster zones.",
+      "stall": "Stall 1",
+      "category": "Healthcare & AI",
+      "members": "Dr. Sarah Chen, Liam Vance",
+      "active": true,
+      "createdAt": "2026-10-29T10:00:00.000Z"
+    },
+    {
+      "id": "team-2",
+      "name": "VerdeGrid",
+      "pitchTitle": "Decentralized Peer-to-Peer Solar Microgrid Trading",
+      "description": "Smart neighborhood energy router allowing rooftop solar owners to sell excess battery power directly to nearby households with zero intermediaries.",
+      "stall": "Stall 1",
+      "category": "CleanTech & Energy",
+      "members": "Amara Patel, Kenji Sato",
+      "active": true,
+      "createdAt": "2026-10-29T10:05:00.000Z"
+    },
+    {
+      "id": "team-3",
+      "name": "PulsePay",
+      "pitchTitle": "Zero-Fee Instant Cross-Border Micro-Remittances",
+      "description": "Next-gen settlement network connecting local mobile money accounts worldwide with sub-second finality and guaranteed FX rates.",
+      "stall": "Stall 2",
+      "category": "Fintech",
+      "members": "Elena Rostova, Carlos Mendez",
+      "active": true,
+      "createdAt": "2026-10-29T10:10:00.000Z"
+    },
+    {
+      "id": "team-4",
+      "name": "AeroCrop Autonomous",
+      "pitchTitle": "Autonomous Swarm Drones for Targeted Crop Health",
+      "description": "Autonomous miniature quadcopters that scan hectare-scale farmland with multispectral sensors and spot-treat pests, reducing pesticide usage by 85%.",
+      "stall": "Stall 2",
+      "category": "AgriTech & Robotics",
+      "members": "Rajiv Sharma, Chloe Dupuis",
+      "active": true,
+      "createdAt": "2026-10-29T10:15:00.000Z"
+    },
+    {
+      "id": "team-5",
+      "name": "CognitivePlay",
+      "pitchTitle": "Spatial AR Math & Physics Playground for Neurodivergent Learners",
+      "description": "An interactive tactile projection and AR system turning abstract STEM formulas into tangible, playful 3D experiments for ADHD & autistic students.",
+      "stall": "Stall 3",
+      "category": "EdTech & XR",
+      "members": "Maya Lin, Jordan Lee",
+      "active": true,
+      "createdAt": "2026-10-29T10:20:00.000Z"
+    },
+    {
+      "id": "team-6",
+      "name": "CipherShield",
+      "pitchTitle": "Post-Quantum Cryptographic Key Exchange for Industrial IoT",
+      "description": "Ultra-lightweight quantum-resilient lattice encryption firmware designed to run seamlessly on low-power microcontrollers in smart grids.",
+      "stall": "Stall 3",
+      "category": "Cybersecurity",
+      "members": "Marcus Webb, Anya Becker",
+      "active": true,
+      "createdAt": "2026-10-29T10:25:00.000Z"
+    }
+  ],
+  "votes": []
+}
