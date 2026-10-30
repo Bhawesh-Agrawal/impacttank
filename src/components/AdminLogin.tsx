@@ -1,18 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Lock, KeyRound, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Lock, ArrowRight } from 'lucide-react';
 
 interface AdminLoginProps {
   onLoginSuccess: () => void;
-  defaultUsername?: string;
 }
 
 export default function AdminLogin({
   onLoginSuccess,
-  defaultUsername = 'admin',
 }: AdminLoginProps) {
-  const [username, setUsername] = useState<string>(defaultUsername);
+  const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,11 +39,6 @@ export default function AdminLogin({
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleDemoFill = () => {
-    setUsername('admin');
-    setPassword('event2026');
   };
 
   return (
@@ -113,7 +106,7 @@ export default function AdminLogin({
                 className="form-control"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="admin"
+                placeholder="Enter username"
                 required
               />
             </div>
@@ -127,7 +120,7 @@ export default function AdminLogin({
                 className="form-control"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="Enter password"
                 required
               />
             </div>
@@ -153,21 +146,8 @@ export default function AdminLogin({
             marginTop: '2rem',
             paddingTop: '1.5rem',
             borderTop: '1px solid var(--border-subtle)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.75rem',
           }}
         >
-          <button
-            type="button"
-            className="btn btn-secondary"
-            style={{ fontSize: '0.8rem', padding: '0.5rem' }}
-            onClick={handleDemoFill}
-          >
-            <Sparkles size={14} style={{ color: '#F59E0B' }} />
-            Fill Default Credentials (admin / event2026)
-          </button>
-
           <a
             href="/"
             style={{

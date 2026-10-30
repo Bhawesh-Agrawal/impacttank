@@ -1,17 +1,13 @@
 import { cookies } from 'next/headers';
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'event2026';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const COOKIE_NAME = 'pitch_admin_auth';
 
-export function getAdminCredentials() {
-  return {
-    username: ADMIN_USERNAME,
-    password: ADMIN_PASSWORD,
-  };
-}
-
 export function checkCredentials(user: string, pass: string): boolean {
+  if (!ADMIN_PASSWORD) {
+    return false;
+  }
   return (
     user.trim().toLowerCase() === ADMIN_USERNAME.toLowerCase() &&
     pass.trim() === ADMIN_PASSWORD

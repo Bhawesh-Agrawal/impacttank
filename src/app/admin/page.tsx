@@ -27,7 +27,6 @@ import { Team, LeaderboardEntry, Vote, DatabaseStatus } from '@/lib/types';
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const [defaultUser, setDefaultUser] = useState<string>('admin');
 
   // Dashboard Data State
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
@@ -56,9 +55,6 @@ export default function AdminPage() {
       const res = await fetch('/api/auth/status');
       const data = await res.json();
       setIsAuthenticated(Boolean(data.authenticated));
-      if (data.defaultUsername) {
-        setDefaultUser(data.defaultUsername);
-      }
     } catch {
       setIsAuthenticated(false);
     }
@@ -261,7 +257,6 @@ export default function AdminPage() {
   if (!isAuthenticated) {
     return (
       <AdminLogin
-        defaultUsername={defaultUser}
         onLoginSuccess={() => {
           setIsAuthenticated(true);
           fetchData();

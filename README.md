@@ -25,13 +25,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🔐 Admin Authentication Credentials
+## 🔐 Admin Authentication
 
 - **URL**: [http://localhost:3000/admin](http://localhost:3000/admin)
-- **Username**: `admin` *(configured via `ADMIN_USERNAME` in `.env.local`)*
-- **Password**: `event2026` *(configured via `ADMIN_PASSWORD` in `.env.local`)*
-
-*(A convenient "Fill Default Credentials" button is also present on the login screen for rapid access).*
+- **Username**: Configured via `ADMIN_USERNAME` in `.env.local` / Vercel
+- **Password**: Configured via `ADMIN_PASSWORD` in `.env.local` / Vercel
 
 ---
 
