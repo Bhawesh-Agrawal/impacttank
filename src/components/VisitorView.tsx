@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Send, CheckCircle2, Sparkles, UserCheck } from 'lucide-react';
+import { Send, Sparkles, UserCheck } from 'lucide-react';
 import Header from './Header';
 import VotingCard from './VotingCard';
+import AdminLogin from './AdminLogin';
 import { Team } from '@/lib/types';
 
 export default function VisitorView() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [guestSessionId, setGuestSessionId] = useState<string>('');
@@ -37,6 +39,28 @@ export default function VisitorView() {
     setGuestSessionId(sid);
   }, []);
 
+  // Check visitor authentication
+  const checkAuth = async () => {
+    try {
+      const res = await fetch('/api/auth/status');
+      const data = await res.json();
+      const authed = Boolean(data.authenticated);
+      setIsAuthenticated(authed);
+      if (authed) {
+        fetchTeams();
+      } else {
+        setLoading(false);
+      }
+    } catch {
+      setIsAuthenticated(false);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   // Fetch teams from API and initialize all ratings to 0
   const fetchTeams = async () => {
     try {
@@ -60,9 +84,14 @@ export default function VisitorView() {
     }
   };
 
-  useEffect(() => {
-    fetchTeams();
-  }, []);
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      setIsAuthenticated(false);
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
+  };
 
   const handleRatingChange = (teamId: string, val: number) => {
     setRatings((prev) => ({
@@ -107,6 +136,12 @@ export default function VisitorView() {
       });
 
       const data = await res.json();
+
+      if (res.status === 401) {
+        setIsAuthenticated(false);
+        throw new Error('Your session has expired. Please sign in again with your credentials.');
+      }
+
       if (!res.ok) {
         throw new Error(data.error || 'Failed to submit ratings');
       }
@@ -155,9 +190,49 @@ export default function VisitorView() {
     }
   };
 
+  // 1. Initial authentication loading state
+  if (isAuthenticated === null) {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#64748B',
+          background: '#F8FAFC',
+        }}
+      >
+        Verifying access credentials...
+      </div>
+    );
+  }
+
+  // 2. Unauthenticated state: Require credentials to view and vote
+  if (!isAuthenticated) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <Header isAuthenticated={false} />
+        <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <AdminLogin
+            title="Impact Tank"
+            subtitle="Please sign in with credentials to access team pitches and vote."
+            submitButtonText="Sign In to Vote"
+            showBackLink={false}
+            onLoginSuccess={() => {
+              setIsAuthenticated(true);
+              fetchTeams();
+            }}
+          />
+        </main>
+      </div>
+    );
+  }
+
+  // 3. Authenticated state: View pitches and cast votes
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header />
+      <Header isAuthenticated={true} onLogout={handleLogout} />
 
       {/* Floating Success Notice when a guest finishes voting */}
       {successBanner && successBanner.show && (
@@ -218,7 +293,7 @@ export default function VisitorView() {
           </p>
         </section>
 
-        {/* Teams Voting Grid - Clean cards without individual submit buttons */}
+        {/* Teams Voting Grid */}
         <section className="teams-grid">
           {loading ? (
             <div

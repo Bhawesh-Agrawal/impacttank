@@ -257,6 +257,7 @@ export default function AdminPage() {
   if (!isAuthenticated) {
     return (
       <AdminLogin
+        showBackLink={true}
         onLoginSuccess={() => {
           setIsAuthenticated(true);
           fetchData();

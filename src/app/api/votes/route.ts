@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getLeaderboard, getVotes, submitVote } from '@/lib/db';
+import { isAuthenticated } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {
   try {
@@ -27,6 +28,14 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const authed = await isAuthenticated();
+    if (!authed) {
+      return NextResponse.json(
+        { error: 'Unauthorized. Valid credentials required to vote.' },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
 
     // Check if body is a batch submission

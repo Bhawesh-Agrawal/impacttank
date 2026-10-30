@@ -5,10 +5,18 @@ import { Lock, ArrowRight } from 'lucide-react';
 
 interface AdminLoginProps {
   onLoginSuccess: () => void;
+  title?: string;
+  subtitle?: string;
+  submitButtonText?: string;
+  showBackLink?: boolean;
 }
 
 export default function AdminLogin({
   onLoginSuccess,
+  title = 'Organizer Access',
+  subtitle = 'Enter credentials to access the organizer command center.',
+  submitButtonText = 'Sign In to Dashboard',
+  showBackLink = false,
 }: AdminLoginProps) {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -44,7 +52,7 @@ export default function AdminLogin({
   return (
     <div
       style={{
-        minHeight: '80vh',
+        minHeight: '75vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -65,20 +73,22 @@ export default function AdminLogin({
             width: '56px',
             height: '56px',
             borderRadius: '16px',
-            background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+            background: 'linear-gradient(135deg, #4F46E5, #7C3AED)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto 1.5rem',
-            boxShadow: '0 0 25px rgba(99, 102, 241, 0.45)',
+            boxShadow: '0 4px 20px rgba(79, 70, 229, 0.3)',
           }}
         >
           <Lock size={26} color="#FFFFFF" />
         </div>
 
-        <h2 style={{ fontSize: '1.6rem', marginBottom: '0.5rem' }}>Organizer Access</h2>
-        <p style={{ color: 'var(--text-dim)', fontSize: '0.875rem', marginBottom: '2rem' }}>
-          Enter the event admin credentials to view real-time rankings and control team stalls.
+        <h2 style={{ fontSize: '1.6rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>
+          {title}
+        </h2>
+        <p style={{ color: 'var(--text-dim)', fontSize: '0.875rem', marginBottom: '2rem', lineHeight: 1.5 }}>
+          {subtitle}
         </p>
 
         {error && (
@@ -91,6 +101,7 @@ export default function AdminLogin({
               color: '#E11D48',
               fontSize: '0.85rem',
               marginBottom: '1.5rem',
+              fontWeight: 500,
             }}
           >
             {error}
@@ -108,6 +119,7 @@ export default function AdminLogin({
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter username"
                 required
+                autoComplete="username"
               />
             </div>
           </div>
@@ -122,6 +134,7 @@ export default function AdminLogin({
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
                 required
+                autoComplete="current-password"
               />
             </div>
           </div>
@@ -134,31 +147,33 @@ export default function AdminLogin({
           >
             {loading ? 'Authenticating...' : (
               <>
-                <span>Sign In to Dashboard</span>
+                <span>{submitButtonText}</span>
                 <ArrowRight size={16} />
               </>
             )}
           </button>
         </form>
 
-        <div
-          style={{
-            marginTop: '2rem',
-            paddingTop: '1.5rem',
-            borderTop: '1px solid var(--border-subtle)',
-          }}
-        >
-          <a
-            href="/"
+        {showBackLink && (
+          <div
             style={{
-              fontSize: '0.8rem',
-              color: 'var(--text-muted)',
-              textDecoration: 'none',
+              marginTop: '2rem',
+              paddingTop: '1.5rem',
+              borderTop: '1px solid var(--border-subtle)',
             }}
           >
-            ← Return to Visitor Voting Page
-          </a>
-        </div>
+            <a
+              href="/"
+              style={{
+                fontSize: '0.8rem',
+                color: 'var(--text-muted)',
+                textDecoration: 'none',
+              }}
+            >
+              ← Return to Main Page
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );
